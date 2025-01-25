@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flag | HTML CSS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="background" draggable="true">
+        <div id="box">
+        </div>
+    </div>
+    <p draggable="true">indonesia</p>
+    <script>
+        const draggableElements = document.querySelectorAll('[draggable="true"]');
+
+        draggableElements.forEach(element => {
+            let offsetX = 0;
+            let offsetY = 0;
+
+            element.addEventListener('dragstart', (e) => {
+                const rect = element.getBoundingClientRect();
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+                requestAnimationFrame(() => {
+                    element.style.transition = 'none';
+                });
+            });
+
+            element.addEventListener('dragend', (e) => {
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+
+                element.style.position = 'absolute';
+                element.style.left = `${x}px`;
+                element.style.top = `${y}px`;
+                element.style.transition = 'transform 0.2s ease';
+
+                requestAnimationFrame(() => {
+                    element.style.transform = 'scale(1.05)';
+                });
+
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
